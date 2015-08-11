@@ -1,0 +1,6 @@
+[submodule "deps/Engine"]
+	path = deps/Engine
+	url = http://stash.wozllajs.com/scm/engine/engine.git
+[submodule "deps/angular"]
+	path = deps/angular
+	url = git@github.com:gastrodia/angular.git
