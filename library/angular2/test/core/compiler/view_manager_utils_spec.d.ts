@@ -1,0 +1,12 @@
+import { Injector } from 'angular2/di';
+import { AppProtoView } from 'angular2/src/core/compiler/view';
+import { ElementBinder } from 'angular2/src/core/compiler/element_binder';
+import { ProtoElementInjector } from 'angular2/src/core/compiler/element_injector';
+export declare function main(): void;
+export declare function createInjector(): Injector;
+export declare function createProtoElInjector(parent?: ProtoElementInjector): ProtoElementInjector;
+export declare function createEmptyElBinder(parent?: ElementBinder): ElementBinder;
+export declare function createNestedElBinder(nestedProtoView: AppProtoView): ElementBinder;
+export declare function createHostPv(binders?: ElementBinder[]): AppProtoView;
+export declare function createComponentPv(binders?: ElementBinder[]): AppProtoView;
+export declare function createEmbeddedPv(binders?: ElementBinder[]): AppProtoView;

@@ -1,5 +1,6 @@
 declare module dom{
      class TemplateCloner {
+       
      }
 }
 

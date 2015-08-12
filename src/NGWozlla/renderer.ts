@@ -9,11 +9,10 @@ import {
     RenderViewWithFragments
 } from 'angular2/angular2';
 
-//import {TemplateCloner} from 'angular2/render/dom';
-
+import {TemplateCloner} from 'angular2/render/dom';
 @Injectable()
 export class WozllaEngineRenderer extends Renderer {
-    constructor() {
+    constructor(private _templateCloner: TemplateCloner) {
         super();
         console.log('WozllaEngineRenderer created');
     }
