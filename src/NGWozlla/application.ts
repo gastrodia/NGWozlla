@@ -5,16 +5,15 @@ import {bind, Binding} from 'angular2/angular2';
 import {Renderer} from 'angular2/angular2';
 import {bootstrap as angularBootstrap} from 'angular2/angular2';
 import {WozllaEngineRenderer} from './renderer';
-import {TemplateCloner} from 'angular2/render/dom';
 import {WozllaTemplateCloner} from './template_cloner';
+
 export type BindingList = List<Type | Binding | List<any>>;
 export function wozllaEngineBootstrap(appComponentType: any,componentInjectableBindings: BindingList = null): Promise<ApplicationRef> {
+  //WozllaEngineDomAdapter.makeCurrent();
   let wozllaEngineBindings: BindingList = [
       WozllaEngineRenderer,
       WozllaTemplateCloner,
       bind(Renderer).toAlias(WozllaEngineRenderer)
-      ,
-      bind(TemplateCloner).toAlias(WozllaTemplateCloner)
   ];
   let augmentedBindings = wozllaEngineBindings.concat(componentInjectableBindings);
 
