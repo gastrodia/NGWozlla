@@ -1,10 +1,11 @@
-/// <reference path="../../typings/angular2/angular2.d.ts"/>
-import {Type} from '../../deps/angular/modules/angular2/src/facade/lang';
-import {ApplicationRef} from '../../deps/angular/modules/angular2/src/core/application';
-import {Promise, PromiseWrapper} from '../../deps/angular/modules/angular2/src/facade/async';
-import {bind, Binding} from '../../deps/angular/modules/angular2/di';
-import {Renderer} from '../../deps/angular/modules/angular2/src/render/api';
-import {bootstrap as angularBootstrap} from '../../deps/angular/modules/angular2/src/core/application';
+
+import ng = require('angular2/angular2');
+import {Type} from 'angular2/angular2';
+import {ApplicationRef} from 'angular2/angular2';
+import {Promise} from 'es6-promise';
+import {bind, Binding} from 'angular2/angular2';
+import {Renderer} from 'angular2/angular2';
+import {bootstrap as angularBootstrap} from 'angular2/angular2';
 import {WozllaEngineRenderer} from './renderer';
 export type BindingList = List<Type | Binding | List<any>>;
 export function wozllaEngineBootstrap(appComponentType: any,componentInjectableBindings: BindingList = null): Promise<ApplicationRef> {

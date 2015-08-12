@@ -1,5 +1,9 @@
 System.config({
   "paths":{
-    "*":"*.js"
+    "*":"*.js",
+    "angular2/*":"./library/angular2.dev.js",
+    "angular2/render/dom":"./library/angular2.dev.js",
+    "angular2/router":"./resource/lib/router.dev.js",
+    "Engine":"./Engine/WOZLLA.js"
     }
 });
