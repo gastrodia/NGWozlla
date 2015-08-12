@@ -4034,8 +4034,6 @@ declare module ng {
 
   class OpaqueToken {
 
-    constructor(str:string);
-
      toString(): string;
   }
 

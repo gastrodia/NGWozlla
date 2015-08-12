@@ -10,25 +10,70 @@
       RenderViewWithFragments
   } from 'angular2/angular2';
 
+import {DomProtoView} from 'angular2/src/render/dom/view/proto_view';
+
+export const NG_BINDING_CLASS_SELECTOR = '.ng-binding';
+export const NG_BINDING_CLASS = 'ng-binding';
+
+export const EVENT_TARGET_SEPARATOR = ':';
+
+export const NG_CONTENT_ELEMENT_NAME = 'ng-content';
+export const NG_SHADOW_ROOT_ELEMENT_NAME = 'shadow-root';
+export class DomProtoViewRef extends RenderProtoViewRef {
+  constructor(public _protoView: DomProtoView) { super(); }
+}
+export var DOM = new BrowserDomAdapter();
 
 
-  import {WozllaTemplateCloner} from './template_cloner';
   @Injectable()
   export class WozllaEngineRenderer extends Renderer {
-      constructor(private _templateCloner: WozllaTemplateCloner) {
+      _document;
+      constructor() {
           super();
           console.log('WozllaEngineRenderer created');
+          this._document = document;
       }
 
       createRootHostView(hostProtoViewRef: RenderProtoViewRef,
                           fragmentCount: number,
                           hostElementSelector: string):any /*RenderViewWithFragments*/ {
           console.log("WozllaEngineRenderer.createRootHostView");
-          console.log(arguments);
-          var hostProtoView = (<any>hostProtoViewRef)._protoView;
-          console.log('hostProtoView',hostProtoView);
-          console.log('this._templateCloner',this._templateCloner);
+          var element = DOM.querySelector(this._document, hostElementSelector);
+          var hostProtoView = (<DomProtoViewRef>hostProtoViewRef)._protoView;
+          this._createView(hostProtoView, element)
+      }
 
+      _createView(protoView: DomProtoView, inplaceElement: HTMLElement): RenderViewWithFragments {
+        var cloneableTemplate = (<any>protoView).cloneableTemplate;
+        var isSingleElementChild = (<any>protoView).isSingleElementChild;
+
+        var templateContent = DOM.content(cloneableTemplate);
+        console.log('templateContent',templateContent);
+        var templateContentFull = DOM.importIntoDoc(templateContent);
+        console.log('templateContentFull',templateContentFull);
+        var clonedTemplate = DOM.clone(templateContentFull);
+        console.log('clonedTemplate',clonedTemplate);
+        var bindings;
+        if (isSingleElementChild) {
+          var rootElement = DOM.firstChild(clonedTemplate);
+          var rootHasBinding = DOM.hasClass(rootElement, NG_BINDING_CLASS);
+          var dynamicElementList = DOM.getElementsByClassName(rootElement, NG_BINDING_CLASS);
+          bindings = dynamicElementList;
+        } else {
+          dynamicElementList = DOM.querySelectorAll(clonedTemplate, NG_BINDING_CLASS_SELECTOR);
+          bindings = dynamicElementList;
+        }
+
+
+        console.log('#########################');
+        console.log(cloneableTemplate);
+        console.log(isSingleElementChild);
+        console.log(bindings);
+        console.log('#########################');
+
+
+        var frag;
+        return frag;
       }
 
       detachFreeHostView(parentHostViewRef: RenderViewRef, hostViewRef: RenderViewRef) {
@@ -69,6 +114,7 @@
       hydrateView(viewRef: RenderViewRef) {
           console.log("WozllaEngineRenderer.hydrateView ");
           console.log(arguments);
+              console.log(this);
       }
 
       dehydrateView(viewRef: RenderViewRef) {
