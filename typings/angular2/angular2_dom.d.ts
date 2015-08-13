@@ -123,3 +123,12 @@ declare module dom{
 declare module "angular2/src/dom/browser_adapter" {
   export = dom;
 }
+
+declare module 'angular2/src/render/dom/view/view'{
+  class DomView{
+    boundElements
+    boundTextNodes
+    constructor(proto: any, boundTextNodes: List<Node>,
+              boundElements: Element[])
+  }
+}

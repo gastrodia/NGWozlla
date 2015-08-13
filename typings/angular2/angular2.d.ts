@@ -6426,6 +6426,7 @@ declare module ng {
   }
 
   class RenderViewWithFragments {
+      constructor(viewRef: RenderViewRef, fragmentRefs: RenderFragmentRef[])
 
      viewRef: RenderViewRef;
 

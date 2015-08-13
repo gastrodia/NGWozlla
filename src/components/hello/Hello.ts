@@ -5,7 +5,7 @@ import {Component, View} from 'angular2/angular2';
 })
 
 @View({
-  template:'<div>hello</div>',
+  template:'<div><ng-content></div>',
   directives:[]
 })
 
