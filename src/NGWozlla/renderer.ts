@@ -1,5 +1,5 @@
   import {Injectable} from 'angular2/angular2';
-  import {BrowserDomAdapter} from 'angular2/src/dom/browser_adapter';
+
   import {
       Renderer,
       RenderEventDispatcher,
@@ -12,7 +12,7 @@
 
 import {DomProtoView} from 'angular2/src/render/dom/view/proto_view';
 import {DomView} from 'angular2/src/render/dom/view/view';
-
+import {WozllaView} from './wozlla';
 
 export const NG_BINDING_CLASS_SELECTOR = '.ng-binding';
 export const NG_BINDING_CLASS = 'ng-binding';
@@ -24,6 +24,7 @@ export const NG_SHADOW_ROOT_ELEMENT_NAME = 'shadow-root';
 export class DomProtoViewRef extends RenderProtoViewRef {
   constructor(public _protoView: DomProtoView) { super(); }
 }
+  import {BrowserDomAdapter} from 'angular2/src/dom/browser_adapter';
 export var DOM = new BrowserDomAdapter();
 
 export function isPresent(obj: any): boolean {
@@ -89,7 +90,7 @@ export class WozllaEngineRenderer extends Renderer {
         console.log("WozllaEngineRenderer.createRootHostView");
         var element = DOM.querySelector(this._document, hostElementSelector);
         var hostProtoView = resolveInternalDomProtoView(hostProtoViewRef);
-        return this._createView(hostProtoView, element)
+        return this._createWozllaView(hostProtoView, element)
     }
 
 
@@ -180,9 +181,21 @@ export class WozllaEngineRenderer extends Renderer {
         console.log("WozllaEngineRenderer.setEventDispatcher ");
     }
 
+    _createWozllaView(protoView: DomProtoView, inplaceElement: HTMLElement): RenderViewWithFragments {
+
+      var wozllaView = new WozllaView(protoView,inplaceElement);
+      wozllaView.run()
+      var view = new DomView(protoView, [],[]);
+      return new RenderViewWithFragments(new DomViewRef(view), [].map(nodes => new DomFragmentRef(nodes)));
+
+    }
+
+
+
 
 
     _createView(protoView: DomProtoView, inplaceElement: HTMLElement): RenderViewWithFragments {
+      //build Wozlla
       var cloneableTemplate = (<any>protoView).cloneableTemplate;
       var isSingleElementChild = (<any>protoView).isSingleElementChild;
       var templateContent = DOM.content(cloneableTemplate);

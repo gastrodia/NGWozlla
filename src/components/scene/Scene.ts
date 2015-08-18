@@ -1,12 +1,12 @@
 import ng = require('angular2/angular2');
-
+import Button = require('../wozlla/button/Button')
 @ng.Component({
   selector:'scene'
 })
 
 @ng.View({
   template:require('./scene.html'),
-  directives:[]
+  directives:[Button]
 })
 
 export class Scene{
