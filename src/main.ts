@@ -4,10 +4,10 @@ import {Inject, Component, View, NgIf, NgFor} from 'angular2/angular2';
 import {LifeCycle} from 'angular2/angular2';
 var lifeCycle: LifeCycle = null;
 import Application = require('./components/application/Application')
-
+import Game = require('./components/game/Game');
 console.log('BOOTSTRAPPING...');
 
-wozllaEngineBootstrap(Application, []).then((appRef) => {
+wozllaEngineBootstrap(Game, []).then((appRef) => {
     console.log('ANGULAR BOOTSTRAP DONE.');
     console.log(appRef);
 }, (err) =>{
