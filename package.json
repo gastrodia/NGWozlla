@@ -17,5 +17,8 @@
     "gulp-less": "^3.0.3",
     "run-sequence": "^1.1.2",
     "through2": "^2.0.0"
+  },
+  "dependencies": {
+    "threejs-build": "^71.0.0"
   }
 }

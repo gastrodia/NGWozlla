@@ -92,14 +92,14 @@ function copyGameObjFromJquery($dom:JQuery,parentGameObj,director:WOZLLA.Directo
 
 }
 
-function wozllaGameObjectFactory(domTree:Node,director:WOZLLA.Director):WOZLLA.GameObject{
+function threeObjectFactory(domTree:Node,director:WOZLLA.Director):WOZLLA.GameObject{
       var $dom = $(domTree);
       var sceneObj = director.createGameObject();
       copyGameObjFromJquery($dom.find('scene'),sceneObj,director);
       return sceneObj;
 }
 
-export class WozllaView{
+export class ThreeView{
     constructor(private protoView: any, private inplaceElement: HTMLElement){
       console.log('WozllaView Init..!')
     }
@@ -129,7 +129,7 @@ export class WozllaView{
       var director = new WOZLLA.Director(document.getElementById('main'));
       director.start();
 
-      var gameObj = wozllaGameObjectFactory(domTree,director);
+      var gameObj = threeObjectFactory(domTree,director);
 
       gameObj.loadAssets(function() {
           gameObj.init();

@@ -1,14 +1,13 @@
 
-import {wozllaEngineBootstrap} from './NGWozlla/application';
 import {threeBootstrap} from './NGThree/application';
 import {Inject, Component, View, NgIf, NgFor} from 'angular2/angular2';
 import {LifeCycle} from 'angular2/angular2';
 var lifeCycle: LifeCycle = null;
 import Application = require('./components/application/Application')
-import Game = require('./components/game/Game');
+import {Game} from './components/three/game';
 console.log('BOOTSTRAPPING...');
 
-wozllaEngineBootstrap(Game, []).then((appRef) => {
+threeBootstrap(Game, []).then((appRef) => {
     console.log('ANGULAR BOOTSTRAP DONE.');
     console.log(appRef);
 }, (err) =>{
@@ -17,7 +16,3 @@ wozllaEngineBootstrap(Game, []).then((appRef) => {
     console.log(errorMessage);
 
 });
-
-
-// import {bootstrap} from 'angular2/angular2';
-// bootstrap(Application);

@@ -7,3 +7,4 @@
 /// <reference path="rx/rx.d.ts" />
 /// <reference path="./traceur-runtime/traceur-runtime.d.ts"/>
 /// <reference path="./jquery/jquery.d.ts"/>
+/// <reference path="../deps/Engine/WOZLLA_all.d.ts"/>

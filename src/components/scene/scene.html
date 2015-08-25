@@ -1,9 +1,13 @@
 <game-object touchable=true transform="200,200"
-  spriteAtlas="../tests/res/common.tt.json"
+  spriteAtlas="./deps/Engine/tests/res/common.tt.json"
 >
   <game-component>
-    <btn></btn>
-    <collider region="-30, -30, 60, 60"></collider>
+        <wozlla-button align="center" valign="middle"
+          normalSpriteName="close.png"
+          pressedSpriteName="close.png"
+          disabledSpriteName="close_h.png"
+        ></wozlla-button>
+    <rect-collider region="-30, -30, 60, 60"></rect-collider>
   </game-component>
 
 </game-object>

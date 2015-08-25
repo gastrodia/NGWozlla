@@ -2,14 +2,13 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>NGWozlla Demo</title>
+    <title>NGThree Demo</title>
     <base href="./">
   </head>
   <body>
 
 
-    <game></game>
-<canvas id="main" width="800" height="800" style="background-color: #000000;"></canvas>
+  <three></three>
 
 
   </body>
@@ -17,8 +16,8 @@
   <script src="./library/traceur-runtime.js"></script>
   <script src="./library/system@0.16.11.js"></script>
   <script src="./config.js"></script>
-  <script src="./deps/Engine/WOZLLA.js"></script>
+  <script src="./node_modules/threejs-build/build/three.js"></script>
   <script>
-      System.import('./build/src/main');
+      System.import('./build/src/three');
     </script>
 </html>
