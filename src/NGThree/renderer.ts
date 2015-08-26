@@ -80,14 +80,14 @@ export class ThreeRenderer extends Renderer {
     _document;
     constructor() {
         super();
-        console.log('WozllaEngineRenderer created');
+        console.log('NGThreeRenderer created');
         this._document = document;
     }
 
     createRootHostView(hostProtoViewRef: RenderProtoViewRef,
                         fragmentCount: number,
                         hostElementSelector: string):RenderViewWithFragments {
-        console.log("WozllaEngineRenderer.createRootHostView");
+        console.log("NGThreeRenderer.createRootHostView");
         var element = DOM.querySelector(this._document, hostElementSelector);
         var hostProtoView = resolveInternalDomProtoView(hostProtoViewRef);
         return this._createWozllaView(hostProtoView, element)
@@ -95,21 +95,21 @@ export class ThreeRenderer extends Renderer {
 
 
     detachFreeHostView(parentHostViewRef: RenderViewRef, hostViewRef: RenderViewRef) {
-        console.log("WozllaEngineRenderer.detachFreeHostView");
+        console.log("NGThreeRenderer.detachFreeHostView");
     }
 
     createView(protoViewRef: RenderProtoViewRef, fragmentCount: number): any {
-        console.log("WozllaEngineRenderer.createView");
+        console.log("NGThreeRenderer.createView");
         var protoView = resolveInternalDomProtoView(protoViewRef);
         return this._createView(protoView,null);
     }
 
     destroyView(viewRef: RenderViewRef) {
-        console.log("WozllaEngineRenderer.destroyView");
+        console.log("NGThreeRenderer.destroyView");
     }
 
     attachFragmentAfterFragment(previousFragmentRef: RenderFragmentRef, fragmentRef: RenderFragmentRef) {
-        console.log("WozllaEngineRenderer.attachFragmentAfterFragment");
+        console.log("NGThreeRenderer.attachFragmentAfterFragment");
         var previousFragmentNodes = resolveInternalDomFragment(previousFragmentRef);
         if (previousFragmentNodes.length > 0) {
           var sibling = previousFragmentNodes[previousFragmentNodes.length - 1];
@@ -118,7 +118,7 @@ export class ThreeRenderer extends Renderer {
     }
 
     attachFragmentAfterElement(elementRef: RenderElementRef, fragmentRef: RenderFragmentRef) {
-      console.log("WozllaEngineRenderer.attachFragmentAfterElement");
+      console.log("NGThreeRenderer.attachFragmentAfterElement");
       if (isBlank(elementRef.renderBoundElementIndex)) {
         return;
       }
@@ -128,32 +128,32 @@ export class ThreeRenderer extends Renderer {
     }
 
     private attachFragmentAfter(anchorNode: any, fragmentNodes:any) {
-        console.log('WozllaEngineRenderer.attachFragmentAfter');
+        console.log('NGThreeRenderer.attachFragmentAfter');
     }
 
     detachFragment(fragmentRef: RenderFragmentRef) {
-        console.log('WozllaEngineRenderer.detachFragment');
+        console.log('NGThreeRenderer.detachFragment');
     }
 
     hydrateView(viewRef: RenderViewRef) {
-        console.log("WozllaEngineRenderer.hydrateView ");
+        console.log("NGThreeRenderer.hydrateView ");
     }
 
     dehydrateView(viewRef: RenderViewRef) {
-        console.log("WozllaEngineRenderer.dehydrateView");
+        console.log("NGThreeRenderer.dehydrateView");
     }
 
     setElementProperty(location: RenderElementRef, propertyName: string, propertyValue: any) {
-        console.log("WozllaEngineRenderer.setElementProperty " + propertyName + " = " + propertyValue);
+        console.log("NGThreeRenderer.setElementProperty " + propertyName + " = " + propertyValue);
     }
 
     setElementAttribute(location: RenderElementRef, attributeName: string, attributeValue: string) {
-        console.log("WozllaEngineRenderer.setElementAttribute " + attributeName + " = " + attributeValue);
+        console.log("NGThreeRenderer.setElementAttribute " + attributeName + " = " + attributeValue);
     }
 
 
     getNativeElementSync(location: RenderElementRef): any {
-        console.log("WozllaEngineRenderer.getNativeElementSync");
+        console.log("NGThreeRenderer.getNativeElementSync");
         if (isBlank(location.renderBoundElementIndex)) {
           return null;
         }
@@ -165,11 +165,11 @@ export class ThreeRenderer extends Renderer {
     * Calls a method on an element.
     */
     invokeElementMethod(location: RenderElementRef, methodName: string, args: List<any>) {
-        console.log("WozllaEngineRenderer.invokeElementMethod " + methodName + " " + args);
+        console.log("NGThreeRenderer.invokeElementMethod " + methodName + " " + args);
     }
 
     setText(viewRef: RenderViewRef, textNodeIndex: number, text: string) {
-        console.log("WozllaEngineRenderer.setText ");
+        console.log("NGThreeRenderer.setText ");
         if (isBlank(textNodeIndex)) {
           return;
         }
@@ -178,7 +178,7 @@ export class ThreeRenderer extends Renderer {
     }
 
     setEventDispatcher(viewRef: RenderViewRef, dispatcher: RenderEventDispatcher) {
-        console.log("WozllaEngineRenderer.setEventDispatcher ");
+        console.log("NGThreeRenderer.setEventDispatcher ");
     }
 
     _createWozllaView(protoView: DomProtoView, inplaceElement: HTMLElement): RenderViewWithFragments {

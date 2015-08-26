@@ -11,92 +11,85 @@ export const NG_SHADOW_ROOT_ELEMENT_NAME = 'shadow-root';
 
 import $ = require('jquery');
 
-function copyGameObjFromJquery($dom:JQuery,parentGameObj,director:WOZLLA.Director){
-        var $objs =  $dom.children('game-object');
-        $objs.each((index,obj)=>{
-          var $obj:JQuery = $(obj);
-          var gameObj = director.createGameObject();
-          if($obj.attr('touchable') == "true"){
-            gameObj.touchable = true;
-          }
-
-          if($obj.attr('transform')){
-            var transform = $obj.attr('transform');
-            let splitList:[number] = <any>transform.split(',');
-            gameObj.transform.setPosition(splitList[0]*1,splitList[1]*1);
-          }
-
-          var spriteAtlas = $obj.attr('spriteAtlas');
-
-          var $components = $obj.children('game-component').children();
-          $components.each((index,component)=>{
-            var $component:JQuery = $(component);
-            console.log(component)
-
-            var tagName = component.tagName.toLocaleLowerCase();
-            if(tagName == 'wozlla-button'){
-              var button = new WOZLLA.component.Button();
-              if($component.attr('spriteAtlas')){
-                button.spriteAtlas.set($component.attr('spriteAtlas'));
-              }else{
-                button.spriteAtlas.set(spriteAtlas);
-              }
-
-              if($component.attr('align')){
-                button.align.set($component.attr('align'));
-              }
-
-              if($component.attr('valign')){
-                button.valign.set($component.attr('valign'));
-              }
-
-              if($component.attr('normalSpriteName')) {
-                button.normalSpriteName.set($component.attr('normalSpriteName'));
-              }
-
-              if($component.attr('pressedSpriteName')){
-                  button.pressedSpriteName.set($component.attr('pressedSpriteName'));
-              }
-
-              if($component.attr('disabledSpriteName')){
-                  button.disabledSpriteName.set($component.attr('disabledSpriteName'));
-              }
-
-
-              gameObj.addComponent(button);
-            }
-
-            if(tagName == 'rect-collider'){
-                var rectCollider = new WOZLLA.component.RectCollider();
-
-                if($component.attr('region')){
-                  var region = $component.attr('region');
-                  let splitList:[number] = <any>region.split(',');
-
-                  rectCollider.setRegion(splitList[0]*1, splitList[1]*1, splitList[2]*1, splitList[3]*1);
-                }
-                gameObj.addComponent(rectCollider);
-            }
-          });
-
-          parentGameObj.addChild(gameObj);
-
-          if($obj.children('game-object').length > 0){
-            copyGameObjFromJquery($obj,gameObj,director);
-          }
-        })
-
-
-
-
-
+function camelCase(s) {
+  return (s||'').toLowerCase().replace(/(\b|-)\w/g, function(m) {
+    return m.toUpperCase().replace(/-/,'');
+  });
 }
 
-function threeObjectFactory(domTree:Node,director:WOZLLA.Director):WOZLLA.GameObject{
-      var $dom = $(domTree);
-      var sceneObj = director.createGameObject();
-      copyGameObjFromJquery($dom.find('scene'),sceneObj,director);
-      return sceneObj;
+function newCall(Cls,args) {
+
+    return new (Function.prototype.bind.apply(Cls,[null].concat(args)));
+    // or even
+    // return new (Cls.bind.apply(Cls, arguments));
+    // if you know that Cls.bind has not been overwritten
+}
+
+function getGameObjFromJquery($dom:JQuery,parent?:any){
+        var $objs =  $dom.children();
+        if(!parent){
+          parent = {
+            scene:null,
+            query:function(name){
+              if(name == 'scene'){
+                return parent['scene'];
+              }else{
+                var scene =  parent['scene'];
+                return scene.getObjectByName(name, true );
+              };
+            }
+          }
+        }
+        console.log($objs);
+        $objs.each((index,obj)=>{
+          let $obj = $(obj);
+
+          let tagName = camelCase($obj.prop("tagName"));
+
+          if(tagName!="Game"){
+            if(tagName == "Scene"){
+              let scene = new THREE.Scene();
+              parent.scene = scene;
+
+              getGameObjFromJquery($obj,scene);
+            }else{
+
+              if(THREE[tagName]){
+                console.log(tagName);
+                if(tagName == "Mesh"){
+
+                    var geometry  = newCall(THREE.BoxGeometry,  $obj.children('box-geometry').text().split(','));
+                    var colorStr = $obj.children('mesh-basic-material').attr('color');
+                    colorStr = colorStr.split('0x').pop();
+                    var color = parseInt(colorStr,16);
+                    //console.log(color.toString(16));
+              			var material =  new THREE.MeshBasicMaterial( { color:color } );
+              			var mesh = new THREE.Mesh( geometry, material );
+                    mesh.name = $obj.attr('name');
+              			parent.add(mesh);
+                }
+
+              }else{
+                getGameObjFromJquery($obj,parent);
+              }
+
+            }
+          }else{
+            getGameObjFromJquery($obj,parent);
+          }
+
+
+
+        });
+
+        return parent;
+}
+
+function getGameObjFromDomTree(domTree:Node){
+  console.log(domTree);
+  var topObject = getGameObjFromJquery($(domTree));
+  console.log(topObject);
+  return topObject;
 }
 
 export class ThreeView{
@@ -126,16 +119,32 @@ export class ThreeView{
       var domTree = this.getDomTree();
 
       //var $canvas = $('<canvas id="main" width="800" height="800" style="background-color: #000000;"></canvas>');
-      var director = new WOZLLA.Director(document.getElementById('main'));
-      director.start();
-
-      var gameObj = threeObjectFactory(domTree,director);
-
-      gameObj.loadAssets(function() {
-          gameObj.init();
-          director.stage.addChild(gameObj);
-      });
 
 
+
+      var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild( renderer.domElement );
+
+      var gameObj:any = getGameObjFromDomTree(domTree);
+      var scene = gameObj.query('scene');
+      console.log(scene);
+
+      var cube = gameObj.query('cube');
+      console.log(cube);
+      camera.position.z = 5;
+
+      var render = function () {
+        requestAnimationFrame( render );
+
+        cube.rotation.x += 0.1;
+        cube.rotation.y += 0.1;
+
+        renderer.render(scene, camera);
+      };
+
+      render();
     }
 }
