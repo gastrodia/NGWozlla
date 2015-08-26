@@ -10,5 +10,7 @@ import {Cube} from './cube';
 })
 
 export class Scene{
+  constructor(){
 
+  }
 }

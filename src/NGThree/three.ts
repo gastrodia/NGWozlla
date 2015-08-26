@@ -60,9 +60,10 @@ function getGameObjFromJquery($dom:JQuery,parent?:any){
 
                     var geometry  = newCall(THREE.BoxGeometry,  $obj.children('box-geometry').text().split(','));
                     var colorStr = $obj.children('mesh-basic-material').attr('color');
+                    console.log(colorStr);
                     colorStr = colorStr.split('0x').pop();
                     var color = parseInt(colorStr,16);
-                    //console.log(color.toString(16));
+                    console.log(color.toString(16));
               			var material =  new THREE.MeshBasicMaterial( { color:color } );
               			var mesh = new THREE.Mesh( geometry, material );
                     mesh.name = $obj.attr('name');

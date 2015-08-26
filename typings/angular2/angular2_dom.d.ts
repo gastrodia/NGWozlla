@@ -132,3 +132,7 @@ declare module 'angular2/src/render/dom/view/view'{
               boundElements: Element[])
   }
 }
+
+declare module 'angular2/src/render/dom/view/proto_view'{
+  class DomProtoView{}
+}

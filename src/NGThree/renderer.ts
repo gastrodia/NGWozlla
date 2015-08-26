@@ -12,7 +12,7 @@
 
 import {DomProtoView} from 'angular2/src/render/dom/view/proto_view';
 import {DomView} from 'angular2/src/render/dom/view/view';
-import {ThreeView} from './three';
+import {ThreeView} from './three'; 
 
 export const NG_BINDING_CLASS_SELECTOR = '.ng-binding';
 export const NG_BINDING_CLASS = 'ng-binding';
@@ -144,7 +144,9 @@ export class ThreeRenderer extends Renderer {
     }
 
     setElementProperty(location: RenderElementRef, propertyName: string, propertyValue: any) {
+        console.log(location)
         console.log("NGThreeRenderer.setElementProperty " + propertyName + " = " + propertyValue);
+        //debugger;
     }
 
     setElementAttribute(location: RenderElementRef, attributeName: string, attributeValue: string) {

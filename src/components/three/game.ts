@@ -1,7 +1,7 @@
 import {Component, View ,NgFor} from 'angular2/angular2';
 import {Scene} from './scene';
 @Component({
-  selector: 'game'
+  selector: 'game',properties:['a','b','c']
 })
 
 @View({
@@ -13,5 +13,9 @@ import {Scene} from './scene';
 export class Game {
   constructor(){
 
+  }
+
+  update(){
+    console.log('update' + arguments);
   }
 }
